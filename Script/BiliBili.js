@@ -172,6 +172,7 @@ async function signBiliBili() {
         console.log("- 硬币不足, 投币失败");
         exec_times = 0;
       } else {
+        // 设置exec_times = 0不进行投币任务
         exec_times = 0;
         if (exec_times == 0){
           console.log("#### 投币任务");
