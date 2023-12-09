@@ -1,69 +1,51 @@
 /*
-哔哩哔哩签到脚本
+哔哩哔哩每日任务
 
-更新时间: 2023-05-07
+更新时间: 2023-10-14
 脚本兼容: QuantumultX, Surge, Loon
-脚本作者: MartinsKing
+脚本作者: MartinsKing（@ClydeTime）
 软件功能: 登录/观看/分享/投币/直播签到/银瓜子转硬币/大会员积分签到/年度大会员每月B币券+等任务
 注意事项:
-  抓取cookie时注意保证账号登录状态;
-  账号内须有一定数量的关注数，否则无法完成投币;
-  当硬币不足5枚，提示硬币不足，停止投币;
-  为保证投币任务成功, 脚本有重试机制(最多重试10次), 以确保任务完成, 前提需要您尽可能多的关注Up主;
-  年度大会员每月B币券会在每月1号、15号尝试领取，确保应用正常运行, 以防漏领;
-  年度大会员自动充电会在每次领劵之后进行, 默认为自己充电, B币多的用户可自行到boxjs设置，以防误充.
-  Loon特别注意:
-    MitM不要勾选MITM over HTTP/2,否则脚本无法正确执行,如必要请获取Cookie成功后再勾选
+	抓取cookie时注意保证账号登录状态;
+	账号内须有一定数量的关注数，否则无法完成投币;
+	当硬币不足5枚，提示硬币不足，停止投币;
+	为保证投币任务成功, 脚本有重试机制(最多重试10次), 以确保任务完成, 前提需要您尽可能多的关注Up主;
+	年度大会员每月B币券会在每月1号、15号尝试领取，确保应用正常运行, 以防漏领;
+	年度大会员自动充电会在每次领劵之后进行, 默认为自己充电, B币多的用户可自行到boxjs设置，以防误充.
 使用声明: ⚠️此脚本仅供学习与交流，请勿贩卖！⚠️
 脚本参考: Nobyda、Wyatt1026、ABreadTree、chavyleung、SocialSisterYi
-特别鸣谢: tg用户「🐈🐈‍⬛🐈‍⬛整点猫咪️」提供Surge供测试, 频道链接「https://t.me/GetsomeCats」
 ************************
 QX, Surge, Loon说明：
 ************************
 1.获取cookie
-  ①后台退出手机B站客户端的情况下, 重新打开APP进入主页
-  ②通过网址「https://www.bilibili.com」登录
+	①后台退出手机B站客户端的情况下, 重新打开APP进入主页
+	②通过网址「https://www.bilibili.com」登录（`暂不支持Loon`）
 如通知成功获取cookie, 则可以使用此签到脚本.
-获取Cookie后, 请将Cookie脚本禁用并移除主机名, 以免产生不必要的MITM.
-脚本将在每天上午8点30执行, 您可以修改执行时间, 但是注意不要在凌晨执行, 否则部分任务可能无法完成(非脚本问题, 可能与B站服务器有关)
+脚本将在每天上午7点30执行.
 2.投币设置
 定时任务脚本投币规则为: 随机获取关注列表Up主视频, 默认5视频5硬币, 不点赞.
-用户如需要不投币的版本, 请使用boxjs订阅「https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/boxjs.json」
+用户如需要不投币的版本, 请使用boxjs订阅「https://raw.githubusercontent.com/ClydeTime/BiliBili/main/boxjs/BiliBili.boxjs.json」
 将投币次数置为0, 并保存即可.
 /***********************
 Surge 脚本配置:
 ************************
 
-[Script]
-B站每日等级任务 = type=cron,cronexp=30 8 * * *,script-path=https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js,wake-system=1,timeout=15,script-update-interval=0
-
-# BiliBili获取Cookie 「请在模块中添加,成功获取Cookie后模块应去除勾选」
-https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Task/GetCookie.sgmodule
+# B站每日等级任务 「请在模块中添加」
+https://raw.githubusercontent.com/ClydeTime/BiliBili/main/modules/BiliBiliDailyBonus.sgmodule
 
 ************************
 QuantumultX 远程脚本配置:
 ************************
 
-[task_local]
-# B站每日等级任务
-30 8 * * * https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js, tag=B站每日等级任务, img-url=https://raw.githubusercontent.com/HuiDoY/Icon/main/mini/Color/bilibili.png, enabled=true
-
-[rewrite_remote]
-# B站获取Cookie 「成功获取Cookie后请去除勾选」
-https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Task/Remote_Cookie.conf, tag=MartinsKing签到Cookie, update-interval=172800, opt-parser=false, enabled=true
+# B站每日等级任务 「请在重写中添加」
+https://raw.githubusercontent.com/ClydeTime/BiliBili/main/modules/BiliBiliDailyBonus.snippet
 
 ************************
 Loon 远程脚本配置:
 ************************
 
-[Script]
-# BiliBili每日等级任务
-cron "30 8 * * *" script-path=https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Script/Task/BiliBili.js, tag=BiliBili每日等级任务
-
-[Plugin]
-# BiliBili获取Cookie 「成功获取Cookie后请禁用插件」
-https://raw.githubusercontent.com/ClydeTime/Quantumult/main/Task/GetCookie.plugin, tag=MartinsKing签到Cookie, enabled=true
-
+# B站每日等级任务 「请在插件中添加」
+https://raw.githubusercontent.com/ClydeTime/BiliBili/main/modules/BiliBiliDailyBonus.plugin
 */
 
 const format = (ts, fmt = 'yyyy-MM-dd HH:mm:ss') => {
@@ -86,6 +68,35 @@ const cookie2object = (cookie) => {
 	return obj;
 }
 
+const setCookieToLocalStore = async (config, times) => {
+	if (config.cookie.DedeUserID) {
+		var url = $request.url
+		config.key = url.match(/.*access_key=(.*?)&build/)?.[1]
+		config.cookieStr = `DedeUserID=${config.cookie.DedeUserID}; DedeUserID__ckMd5=${config.cookie.DedeUserID__ckMd5}; SESSDATA=${config.cookie.SESSDATA}; bili_jct=${config.cookie.bili_jct}; sid=${config.cookie.sid}`
+		if (!config.key) {
+			let confirm_uri = await getConfirm_uri()
+			let envType = $.getEnv()
+			if (envType === 'Surge') {
+				await captureAccess_key(confirm_uri)
+				await getRecentRequests()
+			}else if (envType === 'Quantumult X') {
+				await getAccess_key(confirm_uri)
+			}//'Loon need to do'
+		}
+		if (times === 1) {
+			$.setdata($.toStr(config), $.name + "_daily_bonus")
+				? $.msg($.name, "首次获取cookie", "🎉获取 cookie 成功")
+				: $.msg($.name, "首次获取cookie", "🤒获取 cookie 失败")
+		} else {
+			$.setdata($.toStr(config), $.name + "_daily_bonus")
+				? $.msg($.name, "检测到cookie已更新", "🎉更新 cookie 成功")
+				: $.msg($.name, "检测到cookie已更新", "🤒更新 cookie 失败")
+		}
+	} else {
+		$.msg($.name, "- 尚未登录, 请登录后重新获取cookie")
+	}
+}
+
 const $ = new Env("bilibili")
 const startTime = format()
 let config = {
@@ -104,7 +115,7 @@ let real_times //实际需要投币次数
 !(async () => {
 	if (typeof $request != "undefined") {
 		$.log("- 正在获取cookie, 请稍后")
-		getCookie()
+		await getCookie()
 	} else {
 		await signBiliBili()
 	}
@@ -112,7 +123,7 @@ let real_times //实际需要投币次数
 	.catch((e) => $.logErr(e))
 	.finally(() => $.done())
 
-function getCookie() {
+async function getCookie() {
 	if ('object' == typeof $request) {
 		let Cookie
 		if (typeof $request.headers.cookie != 'undefined') {
@@ -120,19 +131,121 @@ function getCookie() {
 		} else if (typeof $request.headers.Cookie != 'undefined') {
 			Cookie = $request.headers.Cookie
 		}
-		config.cookie = cookie2object(Cookie)
-		if (config.cookie.DedeUserID) {
-			$.log("- cookie获取成功")
-			let url = $request.url
-			config.key = url.match(/.*access_key=(.*?)&build/)?.[1]
-			config.cookieStr = `DedeUserID=${config.cookie.DedeUserID}; DedeUserID__ckMd5=${config.cookie.DedeUserID__ckMd5}; SESSDATA=${config.cookie.SESSDATA}; bili_jct=${config.cookie.bili_jct}; sid=${config.cookie.sid}`
-			$.setdata($.toStr(config), $.name + "_daily_bonus")
-			? $.msg($.name, "cookie catch success", "🎉获得 cookie 成功")
-			: $.msg($.name, "cookie catch failed", "🤒获得 cookie 失败")
+		if (Boolean(Cookie)) {
+			config.cookie = cookie2object(Cookie)
+			original_config = $.getjson($.name + "_daily_bonus", {})
+			if (Boolean(original_config.cookie)) {
+				if (original_config.cookie.bili_jct === config.cookie.bili_jct) {
+					$.log("- cookie未失效,无需更新")
+				} else {
+					await setCookieToLocalStore(config, 2)
+				}
+			} else {
+				await setCookieToLocalStore(config, 1)
+			}
 		} else {
-			$.log("- 尚未登录, 请登录后再重新获取cookie")
-		}   
+			$.msg($.name, "- 尚未登录, 请登录后重新获取cookie")
+		}
 	}
+}
+
+async function getConfirm_uri() {
+	var sign = md5("api=http://link.acg.tv/forum.php" + 'c2ed53a74eeefe3cf99fbd01d8c9c375')
+	const myRequest = {
+			url: "https://passport.bilibili.com/login/app/third?appkey=27eb53fc9058f8c3&api=http://link.acg.tv/forum.php&sign=" + sign,
+			headers: {
+				"cookie": config.cookieStr
+			}
+	}
+	return await $.http.get(myRequest).then(response => {
+		try {
+			const body = $.toObj(response.body)
+			if (body?.code === 0) {
+				return body?.data?.confirm_uri
+			} else {
+				$.log("- 查询失败")
+				$.log("- 失败原因 " + body?.message)
+			}
+		} catch (e) {
+			$.logErr(e, response)
+		}
+	}, reason => {
+		$.log("- 失败原因 " + $.toStr(reason))
+		return "error"
+	})
+}
+
+function captureAccess_key(confirm_uri) {
+	return new Promise((resolve, reject) => {
+		const myRequest = {
+				url: confirm_uri,
+				headers: {
+					"cookie": config.cookieStr
+				}
+		}
+		$.get(myRequest,(err, resp, data) => {
+			if (err) reject(err)
+			else {
+				try {
+				} catch (e) {
+					$.logErr(e, resp)
+				} finally {
+					resolve()
+				}
+			}
+		})
+	})
+}
+
+function getAccess_key(confirm_uri) {
+	return new Promise((resolve, reject) => {
+		$.log("- 正在获取access_key, 请稍后")
+		const myRequest = {
+				url: confirm_uri,
+				headers: {
+					"cookie": config.cookieStr
+				},
+				opts: {
+					"redirection": false
+				}
+		}
+		$.get(myRequest,(err, resp, data) => {
+			if (err) reject(err)
+			else {
+				try {
+					const url = resp.headers.Location
+					if (url) {
+						config.key = url.match(/.*access_key=(.*?)&mid/)?.[1]
+					}
+				} catch (e) {
+					$.logErr(e, resp)
+				} finally {
+					resolve()
+				}
+			}
+		})
+	})
+}
+
+function getRecentRequests() {
+	return new Promise((resolve, reject) => {
+		$.log("- 正在获取最近请求列表, 请稍后")
+		$httpAPI("GET","/v1/requests/recent",null,(result) => {
+			if (!result) reject(result)
+			else {
+				try {
+					const url = result.requests.find(request => request.URL.includes("access_key"))?.URL;
+					if (url) {
+						config.key = url.match(/.*access_key=(.*?)&mid/)?.[1]
+					}
+				} catch (e) {
+					$.logErr(e, result)
+				} finally {
+					resolve()
+				}
+			}
+		})
+	})
 }
 
 async function signBiliBili() {
@@ -140,17 +253,16 @@ async function signBiliBili() {
 	if (config.cookie && await me()) {
 		await queryStatus()
 		var flag = true
-		let exec_times = $.getdata($.name + "_exec")	//用户设置投币次数
+		let exec_times = config.Settings?.exec	//用户设置投币次数
 		if (!Boolean(exec_times)) {
-      $.log("🔔 自定义，关闭投币任务！")
 			exec_times = 5
-			real_times = 0 //原代码：5 - (Number(config.coins.num) / 10)，自定义关闭投币任务
+			real_times = 0
 		} else {
 			exec_times = Number(exec_times)
 			real_times = Math.max(0, exec_times - (Number(config.coins.num) / 10))
 		}
 		
-		if (config.user.num < 1 || config.watch.num < 1 || config.share.num < 1 || (config.coins.num < exec_times * 10 && config.user.money > 5)) flag = false
+		if (config.user.num < 1 || config.watch.num < 1 || config.share.num < 1 || (config.coins.num < exec_times * 10 && Math.floor(config.user.money) > 5)) flag = false
 		if (!flag){
 			await dynamic()
 			if (cards.length) {
@@ -167,13 +279,13 @@ async function signBiliBili() {
 			if (real_times === 0){
 				$.log(`- 今日已完成 ${config.coins.time}`)
 			} else {
-				//$.log(`- 需要投币次数 ${real_times}`)
 				for (var i = 0; i < real_times; i ++) {
-					if (config.user.money <= 5) {
+					if (Math.floor(config.user.money) <= 5) {
 						$.log("- 硬币不足,投币失败")
 						break
 					} else {
 						await coin()
+						await $.wait(300) //减少频繁请求概率
 					}
 				}
 			}
@@ -186,17 +298,19 @@ async function signBiliBili() {
 		await silver2coin()
 		await vipScoreSign()
 		if (config.user.vipStatus === 1) {
+			await vipExtraEx()
 			await vipScoreGo()
 			await vipScoreFan()
 			await vipScoreMovie()
 			await vipScoreDress()
 			await vipWatchAccept()
 			//B币券每月尝试两次领取
-			if ($.time('dd') === 1 || $.time('dd') === 15) {
+			if ($.time('dd') === '1' || $.time('dd') === '15') {
 				if (config.user.vipType === 2) {
 					await vipPrivilege(1)
-					let charge_mid = $.getdata($.name + "_charge_mid") || config.user.mid
-					let bp_num = $.getdata($.name + "_bp_num") || 5
+					await $.wait(800); //延迟执行，防止领劵延迟
+					let charge_mid = config.Settings?.charge_mid || config.user.mid
+					let bp_num = config.Settings?.bp_num || 5
 					await Charge(charge_mid, bp_num)//充电
 					await vipPrivilege(2)
 					await vipPrivilege(3)
@@ -214,7 +328,7 @@ async function signBiliBili() {
 			config.user.num < 1 ||
 			config.watch.num < 1 ||
 			config.share.num < 1 ||
-			(config.coins.num < exec_times * 10 && config.user.money > 5)	//硬币不足也算完成任务
+			(config.coins.num < exec_times * 10 && Math.floor(config.user.money) > 5)	//硬币不足也算完成任务
 				? false
 				: true
 		let title = `${$.name} 登录${config.user.num}/观看${config.watch.num}/分享${config.share.num}/投币${config.coins.num / 10}${flag ? "已完成" : "未完成"}`
@@ -304,9 +418,10 @@ function queryStatus() {
 								}
 							}
 						} else if ((body.data.coins / 10) >= real_times) {
-							$.log("- 今天投币已达到用户预设量")
+							config.coins.time = startTime
+							$.log("- 今日投币已完成用户预期")
 							config.coins.num = body.data.coins
-						} else if (config.user.money < 5) {
+						} else if (config.user.money <= 5) {
 							$.log("! 硬币数不足")
 							config.coins.num = body.data.coins
 						} else {
@@ -363,6 +478,7 @@ async function watch(aid, bvid, cid) {
 			const body = $.toObj(response.body)
 			if (body?.code === 0) {
 				$.log(`- 累计观看(登录)次数 ${(config.watch.num || 0) + 1}`)
+				config.user.num = (config.user.num || 0) + 1
 				config.watch.num = (config.watch.num || 0) + 1
 				$.setdata($.toStr(config), $.name + "_daily_bonus")
 			} else {
@@ -444,6 +560,7 @@ async function coin() {
 				const myRequest = {
 					url: "https://api.bilibili.com/x/web-interface/coin/add",
 					headers: {
+						'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
 						'accept': 'application/json, text/plain, */*',
 						'content-type': 'application/x-www-form-urlencoded',
 						'origin': 'https://www.bilibili.com',
@@ -518,20 +635,16 @@ async function getFavAid(arr) {
 	//$.log("- 获取关注列表中的随机视频")
 	var random_int = Math.floor((Math.random()*arr.length))
 	var random_mid = arr[random_int]
+	var wbiSigns = getWbiSigns({mid: random_mid})
 	const myRequest = {
-		url: `https://api.bilibili.com/x/space/arc/search?mid=${random_mid}`,
+		url: `https://api.bilibili.com/x/space/wbi/arc/search?${wbiSigns}`,
 		headers: {
 			'cookie': config.cookieStr
 		}
 	}
 	return await $.http.get(myRequest).then(response => {
 		try {
-			let body = $.toObj('[' + response.body.replace(/}{/g, '},{') + ']')
-			if (body[0]?.code === -509) {//请求接口频繁，实际上还是会返回到数组的第二个元素中
-				body = body[1]
-			} else {
-				body = body[0]
-			}
+			const body = $.toObj(response.body)
 			if (body?.code === 0) {
 				$.log("- 获取投币视频成功")
 				let vlist = body.data?.list?.vlist
@@ -674,6 +787,47 @@ async function vipScoreSign() {
 			$.log("- 今日已完成")
 		}
 	}
+}
+
+function vipExtraEx() {
+	return new Promise((resolve, reject) => {
+		$.log("#### 大会员每日额外经验值")
+		const body = {
+			csrf: config.cookie.bili_jct,
+			mobi_app: 'iphone',
+			platform:'ios',
+			appkey:'27eb53fc9058f8c3',
+			access_key:`${config.key}`
+		}
+		const myRequest = {
+			url: "https://api.bilibili.com/x/vip/experience/add",
+			headers: {
+				'Accept:' : `application/json, text/plain, */*`,
+				'App-key': 'iphone'
+			},
+			body: $.queryStr(body)
+		}
+		$.post(myRequest, (err, resp, data) => {
+			if (err) reject(err)
+			else {
+				try {
+					const body = $.toObj(data)
+					if (body?.code == 0 && body?.message == "0") {
+						$.log("- 成功获得10经验值")
+						return true
+					} else {
+						$.log("- 每日额外经验任务失败")
+						$.log("- 失败原因 " + body?.message)
+						return false
+					}
+				} catch (e) {
+					$.logErr(e, resp)
+				} finally {
+					resolve()
+				}
+			}
+		})
+	})
 }
 
 function vipScoreGo() {
@@ -987,7 +1141,7 @@ function me() {
 					`- 距离下级还需: ${config.user.next_day}天(登录 观看 分享)`
 				)
 				$.log(
-					`- 距离满级还需: ${config.user.v6_day}天(登录 观看 分享)`
+					`- 距离满级还需: ${Math.max(0, config.user.v6_day)}天(登录 观看 分享)`
 				)
 				$.log(`- 剩余硬币最多可投: ${Math.floor((config.user.money)/5)}天`)
 				$.log(
@@ -1039,6 +1193,8 @@ function dynamic() {
 	})
 }
 
+// Wbi签名获取
+function getWbiSigns(r){function t(r){let t="";return e.forEach(s=>{t+=r[s]}),t.slice(0,32)}function s(r,s,u){const e=t(s+u),i=parseInt($.startTime/1e3);let n="";r=Object.assign(r,{wts:i}),n=$.queryStr(Object.fromEntries(new Map(Array.from(Object.entries(r)).sort())));const l=md5(n+e);return n+"&w_rid="+l}function u(){return img_url=config.user.wbi_img.img_url,sub_url=config.user.wbi_img.sub_url,{img_key:img_url.substring(img_url.lastIndexOf("/")+1,img_url.length).split(".")[0],sub_key:sub_url.substring(sub_url.lastIndexOf("/")+1,sub_url.length).split(".")[0]}}const e=[46,47,18,2,53,8,23,32,15,50,10,31,58,3,45,35,27,43,5,49,33,9,42,19,29,28,14,39,12,38,41,13,37,48,7,16,24,55,40,61,26,17,0,1,60,51,30,4,22,25,54,21,56,59,6,63,57,62,11,36,20,34,44,52],i=u();return s(r,i.img_key,i.sub_key)}
 
 // md5(32位)
 function md5(r){function n(r,n){return r<<n|r>>>32-n}function t(r,n){var t,o,e,u,f;return e=2147483648&r,u=2147483648&n,t=1073741824&r,o=1073741824&n,f=(1073741823&r)+(1073741823&n),t&o?2147483648^f^e^u:t|o?1073741824&f?3221225472^f^e^u:1073741824^f^e^u:f^e^u}function o(r,n,t){return r&n|~r&t}function e(r,n,t){return r&t|n&~t}function u(r,n,t){return r^n^t}function f(r,n,t){return n^(r|~t)}function i(r,e,u,f,i,a,c){return r=t(r,t(t(o(e,u,f),i),c)),t(n(r,a),e)}function a(r,o,u,f,i,a,c){return r=t(r,t(t(e(o,u,f),i),c)),t(n(r,a),o)}function c(r,o,e,f,i,a,c){return r=t(r,t(t(u(o,e,f),i),c)),t(n(r,a),o)}function C(r,o,e,u,i,a,c){return r=t(r,t(t(f(o,e,u),i),c)),t(n(r,a),o)}function g(r){for(var n,t=r.length,o=t+8,e=(o-o%64)/64,u=16*(e+1),f=Array(u-1),i=0,a=0;a<t;)n=(a-a%4)/4,i=a%4*8,f[n]=f[n]|r.charCodeAt(a)<<i,a++;return n=(a-a%4)/4,i=a%4*8,f[n]=f[n]|128<<i,f[u-2]=t<<3,f[u-1]=t>>>29,f}function h(r){var n,t,o="",e="";for(t=0;t<=3;t++)n=r>>>8*t&255,e="0"+n.toString(16),o+=e.slice(-2);return o}function d(r){r=r.replace(/\r\n/g,"\n");for(var n="",t=0;t<r.length;t++){var o=r.charCodeAt(t);o<128?n+=String.fromCharCode(o):o>127&&o<2048?(n+=String.fromCharCode(o>>6|192),n+=String.fromCharCode(63&o|128)):(n+=String.fromCharCode(o>>12|224),n+=String.fromCharCode(o>>6&63|128),n+=String.fromCharCode(63&o|128))}return n}var m,S,v,l,A,s,y,p,w,L=Array(),b=7,j=12,k=17,q=22,x=5,z=9,B=14,D=20,E=4,F=11,G=16,H=23,I=6,J=10,K=15,M=21;for(r=d(r),L=g(r),s=1732584193,y=4023233417,p=2562383102,w=271733878,m=0;m<L.length;m+=16)S=s,v=y,l=p,A=w,s=i(s,y,p,w,L[m+0],b,3614090360),w=i(w,s,y,p,L[m+1],j,3905402710),p=i(p,w,s,y,L[m+2],k,606105819),y=i(y,p,w,s,L[m+3],q,3250441966),s=i(s,y,p,w,L[m+4],b,4118548399),w=i(w,s,y,p,L[m+5],j,1200080426),p=i(p,w,s,y,L[m+6],k,2821735955),y=i(y,p,w,s,L[m+7],q,4249261313),s=i(s,y,p,w,L[m+8],b,1770035416),w=i(w,s,y,p,L[m+9],j,2336552879),p=i(p,w,s,y,L[m+10],k,4294925233),y=i(y,p,w,s,L[m+11],q,2304563134),s=i(s,y,p,w,L[m+12],b,1804603682),w=i(w,s,y,p,L[m+13],j,4254626195),p=i(p,w,s,y,L[m+14],k,2792965006),y=i(y,p,w,s,L[m+15],q,1236535329),s=a(s,y,p,w,L[m+1],x,4129170786),w=a(w,s,y,p,L[m+6],z,3225465664),p=a(p,w,s,y,L[m+11],B,643717713),y=a(y,p,w,s,L[m+0],D,3921069994),s=a(s,y,p,w,L[m+5],x,3593408605),w=a(w,s,y,p,L[m+10],z,38016083),p=a(p,w,s,y,L[m+15],B,3634488961),y=a(y,p,w,s,L[m+4],D,3889429448),s=a(s,y,p,w,L[m+9],x,568446438),w=a(w,s,y,p,L[m+14],z,3275163606),p=a(p,w,s,y,L[m+3],B,4107603335),y=a(y,p,w,s,L[m+8],D,1163531501),s=a(s,y,p,w,L[m+13],x,2850285829),w=a(w,s,y,p,L[m+2],z,4243563512),p=a(p,w,s,y,L[m+7],B,1735328473),y=a(y,p,w,s,L[m+12],D,2368359562),s=c(s,y,p,w,L[m+5],E,4294588738),w=c(w,s,y,p,L[m+8],F,2272392833),p=c(p,w,s,y,L[m+11],G,1839030562),y=c(y,p,w,s,L[m+14],H,4259657740),s=c(s,y,p,w,L[m+1],E,2763975236),w=c(w,s,y,p,L[m+4],F,1272893353),p=c(p,w,s,y,L[m+7],G,4139469664),y=c(y,p,w,s,L[m+10],H,3200236656),s=c(s,y,p,w,L[m+13],E,681279174),w=c(w,s,y,p,L[m+0],F,3936430074),p=c(p,w,s,y,L[m+3],G,3572445317),y=c(y,p,w,s,L[m+6],H,76029189),s=c(s,y,p,w,L[m+9],E,3654602809),w=c(w,s,y,p,L[m+12],F,3873151461),p=c(p,w,s,y,L[m+15],G,530742520),y=c(y,p,w,s,L[m+2],H,3299628645),s=C(s,y,p,w,L[m+0],I,4096336452),w=C(w,s,y,p,L[m+7],J,1126891415),p=C(p,w,s,y,L[m+14],K,2878612391),y=C(y,p,w,s,L[m+5],M,4237533241),s=C(s,y,p,w,L[m+12],I,1700485571),w=C(w,s,y,p,L[m+3],J,2399980690),p=C(p,w,s,y,L[m+10],K,4293915773),y=C(y,p,w,s,L[m+1],M,2240044497),s=C(s,y,p,w,L[m+8],I,1873313359),w=C(w,s,y,p,L[m+15],J,4264355552),p=C(p,w,s,y,L[m+6],K,2734768916),y=C(y,p,w,s,L[m+13],M,1309151649),s=C(s,y,p,w,L[m+4],I,4149444226),w=C(w,s,y,p,L[m+11],J,3174756917),p=C(p,w,s,y,L[m+2],K,718787259),y=C(y,p,w,s,L[m+9],M,3951481745),s=t(s,S),y=t(y,v),p=t(p,l),w=t(w,A);return(h(s)+h(y)+h(p)+h(w)).toLowerCase()}
