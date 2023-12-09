@@ -277,7 +277,7 @@ async function signBiliBili() {
 
 			$.log("3️⃣ 投币任务")
 			if (real_times === 0){
-				$.log(`- 今日已完成 ${config.coins.time}`)
+				$.log(`- 投币任务已自定义关闭: ${config.coins.time}`)
 			} else {
 				for (var i = 0; i < real_times; i ++) {
 					if (Math.floor(config.user.money) <= 5) {
