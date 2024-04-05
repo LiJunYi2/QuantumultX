@@ -1,4 +1,5 @@
 # pikpak-AAA 临时邮箱分流规则 DIRECT
+# 适用圈 X 、surge，其他工具参考自行设置接口
 host-suffix, temp-mail.io, direct
 host-suffix, tempmail.plus, direct
 host-suffix, mail.cx, direct
