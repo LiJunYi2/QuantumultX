@@ -1,1 +1,5 @@
-DOMAIN-SUFFIX,0.101tubeporn.com
+#pikpak脚本email分流规则：适用loon 
+DOMAIN-SUFFIX, temp-mail.io
+DOMAIN-SUFFIX, tempmail.plus
+DOMAIN-SUFFIX, mail.cx
+DOMAIN-SUFFIX, mail.td
