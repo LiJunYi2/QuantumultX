@@ -1,7 +1,7 @@
 /*
 哔哩哔哩每日任务(V1.1)
 
-手动修改代码设置不投币
+Tips:在原作者代码基础上进行修改，手动设置不投币
 
 更新时间: 2024-04-06
 脚本兼容: QuantumultX, Surge, Loon
@@ -23,7 +23,7 @@ QX, Surge, Loon说明：
 	①后台退出手机B站客户端的情况下, 重新打开APP进入主页
 	②通过网址「https://www.bilibili.com」登录（`暂不支持Loon`）
 如通知成功获取cookie, 则可以使用此签到脚本.
-脚本将在每天上午7点30执行.
+脚本将在每天上午18点40执行.
 2.投币设置
 定时任务脚本投币规则为: 随机获取关注列表Up主视频, 默认5视频5硬币, 不点赞.
 用户如需要不投币的版本, 请使用boxjs订阅「https://raw.githubusercontent.com/ClydeTime/BiliBili/main/boxjs/BiliBili.boxjs.json」
@@ -162,11 +162,12 @@ async function signBiliBili() {
 		if (!Boolean(exec_times)) {
 			exec_times = 0
 			// real_times = 5 - (Number(config.coins.num) / 10)
-      real_times = 0
+      		real_times = 0
 		} else {
-			exec_times = Number(exec_times)
+			// exec_times = Number(exec_times)
+			exec_times = 0
 			// real_times = Math.max(0, exec_times - (Number(config.coins.num) / 10))
-      real_times = 0
+      		real_times = 0
 		}
 		let flag = isFlag(exec_times)
 		if (flag){
