@@ -12,3 +12,5 @@ IP-CIDR,50.117.27.0/24
 IP-CIDR,69.46.75.0/24
 IP-CIDR,205.164.56.0/24
 IP-CIDR,63.251.124.0/24
+# 下面这个tktn.be，需要走代理！！！自行设置
+# host-suffix, tktn.be, TW
