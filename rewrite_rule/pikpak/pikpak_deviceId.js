@@ -1,12 +1,18 @@
-/*
+/**************************************
 
-PikPak工具(V1.0)
+#!name = PikPak工具
+#!desc = 随机设备码和IP
+#!author = AAA
+#!date = 2024-09-14
 
-更新时间: 2024-09-14
-脚本兼容: QuantumultX
-脚本作者: AAA
-软件功能: 修改 PikPak 的设备 ID 以及随机 IP
-*/
+
+[Script]
+# PIKPAK修改设备码
+http-request ^https?:\/\/.*\.mypikpak\.com\/.* script-path=https://raw.githubusercontent.com/LiJunYi2/QuantumultX/main/rewrite_rule/pikpak/pikpak_deviceId.js, tag = PikPak工具
+[Mitm]
+hostname = *.mypikpak.com
+
+**************************************/
 
 const format = (ts, fmt = 'yyyy-MM-dd HH:mm:ss') => {
 	return $.time(fmt, ts);
