@@ -4,19 +4,7 @@
 #!desc = 随机设备码和IP
 #!author = AAA
 #!date = 2024-09-14
-
-
-[Script]
-# PIKPAK修改设备码
-http-request ^https?:\/\/.*\.mypikpak\.com\/.* script-path=https://raw.githubusercontent.com/LiJunYi2/QuantumultX/main/rewrite_rule/pikpak/pikpak_deviceId.js, tag = PikPak工具
-[Mitm]
-hostname = *.mypikpak.com
-
 **************************************/
-
-const format = (ts, fmt = 'yyyy-MM-dd HH:mm:ss') => {
-	return $.time(fmt, ts);
-}
 
 function generateUUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -30,21 +18,22 @@ function getChangeIp() {
     return Array.from({ length: 4 }, () => Math.floor(Math.random() * 256)).join('.');
 }
 
-
 const $ = new Env("pikpak")
-const startTime = format()
+
 const devicedId = generateUUID()
 const ip = getChangeIp()
-const Headers = $request.headers
+
+const Headers = $request.headers || {};
+
 Headers['x-device-id'] = devicedId
 Headers['x-forwarded-for'] = ip
 Headers['x-guid'] = devicedId
 
-$.log("PikPak工具--> 随机设备码:",devicedId)
-$.log("IP:",ip)
+$.log("PikPak工具--> 随机设备码:", devicedId)
+$.log("IP:", ip)
 
+$.done({ headers: Headers });
 
-$.done({ headers : Headers})
 
 
 /***************** Env *****************/
