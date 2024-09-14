@@ -8,11 +8,13 @@
 
 const $ = new Env("pikpak");
 
+$.setItem('devicedId', '');
+$.setItem('ip', '');
+
 let devicedId = $.getItem('devicedId');
 let ip = $.getItem('ip');
-
 if (!devicedId || !ip) {
-    devicedId = generateUUID();
+    devicedId = generateUUID().replace(/-/g, '');
     ip = getChangeIp();
     $.setItem('devicedId', devicedId);
     $.setItem('ip', ip);
@@ -27,8 +29,8 @@ Headers['x-device-id'] = devicedId;
 Headers['x-forwarded-for'] = ip;
 Headers['x-guid'] = devicedId;
 
-$.log("PikPak工具-> 设备码:", devicedId);
-$.log("PikPak随机IP->:", ip);
+$.log("随机设备码:", devicedId);
+$.log("随机IP:", ip);
 
 $.done({ headers: Headers });
 
