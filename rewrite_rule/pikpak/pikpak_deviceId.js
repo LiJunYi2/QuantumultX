@@ -7,10 +7,6 @@
 **************************************/
 
 const $ = new Env("pikpak");
-
-$.setItem('devicedId', '');
-$.setItem('ip', '');
-
 let devicedId = $.getItem('devicedId');
 let ip = $.getItem('ip');
 if (!devicedId || !ip) {
