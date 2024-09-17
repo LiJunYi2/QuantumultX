@@ -10,7 +10,6 @@ const $ = new Env("pikpak");
 const url = $request.url;
 const method = $request.method;
 const postMethod = "POST";
-
 if (url.includes("auth/revoke")){
     $.log("🔔退出账号，清除旧devicedId和IP");
     $prefs.setValueForKey(null, 'devicedId');
