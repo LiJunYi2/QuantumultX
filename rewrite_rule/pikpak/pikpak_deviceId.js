@@ -11,11 +11,11 @@ const url = $request.url;
 const method = $request.method;
 const postMethod = "POST";
 if (url.includes("auth/revoke")){
-    $.log("🔔退出账号，清除旧devicedId和IP");
-    $prefs.setValueForKey(null, 'devicedId');
-    $prefs.setValueForKey(null, 'ip');
     $.name = `PikPakTool-退出账户`;
     $.msg($.name, "🔔退出账号，清除旧devicedId和IP", "")
+    $prefs.setValueForKey(null, 'devicedId');
+    $prefs.setValueForKey(null, 'ip');
+    $.log("🔔退出账号，清除旧devicedId和IP完成");
 } else if (url.includes(".js") || url.includes(".css")){
     $done();
 } else {
