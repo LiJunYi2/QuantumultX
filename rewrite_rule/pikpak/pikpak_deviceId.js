@@ -7,9 +7,6 @@
 **************************************/
 
 const $ = new Env("pikpak");
-const notify = $.isNode() ? require('./sendNotify') : '';
-
-
 const url = $request.url;
 const method = $request.method;
 const postMethod = "POST";
