@@ -27,16 +27,12 @@ if (url.includes("auth/revoke")){
         $.setItem('devicedId', devicedId);
         $.setItem('ip', ip);
         $.log("🔔首次执行，生成随机设备码和IP。");
-    } else {
-        $.log("🔔使用已存储的设备码和IP。");
     }
     const Headers = $request.headers || {};
     Headers['x-device-id'] = devicedId;
     Headers['x-forwarded-for'] = ip;
     Headers['x-guid'] = devicedId;
-    $.log("随机设备码:", devicedId);
-    $.log("随机IP:", ip);
-    $.msg("初始化", "随机设备随机IP初始化完成", "")
+    $.log(`设备码:${devicedId},随机IP:${ip}`);
     $.done({ headers: Headers });
 }
 
