@@ -1,3 +1,15 @@
+/****************************
+
+#!name = Follow签到
+#!desc = Follow签到
+#!author = AAA
+#!date = 2024-09-30
+
+[Script]
+
+[Mitm]
+hostname = *.follow.js
+****************************/
 const $ = new Env('follow 每日签到')
 $.desc = []
 
