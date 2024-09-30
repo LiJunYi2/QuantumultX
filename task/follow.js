@@ -2,7 +2,7 @@
 
 #!name = Follow签到
 #!desc = Follow签到
-#!author = AAA
+#!author = -
 #!date = 2024-09-30
 
 [Script]
