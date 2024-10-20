@@ -35,50 +35,54 @@ function getUUID() {
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done());
-  
+
 function register() {
   return new Promise((resolve) => {
-    const url = `https://sksp.feiwang.cc/sk-api/user/add`;
-    const method = `POST`;
-    userName = getRandomGmail();
-    const headers = {
-      'User-Agent': `Dart/2.10 (dart:io)`,
-      'Host': `sksp.feiwang.cc`,
-      'Content-Type': `application/json; charset=utf-8`,
-      'Accept-Encoding': `gzip`,
-      'Authorization': ``
-    };
-  
-    const body = JSON.stringify({
-      name: userName,
-      password: "zjm12345",
-      confirmPassword: "zjm12345",
-      code: "",
-      yqm: yqm,
-      type: "noyzm",
-      device: getUUID()
-    });
-  
-    const myRequest = {
-      url: url,
-      method: method,
-      headers: headers,
-      body: body
-    };
-  
-    $.post(myRequest, async (err, resp, body) => {
-      try {
-        if (resp && resp.statusCode === 200) {
-          $.msg($.name, `邀请成功，账号: ${userName}`);
-        } else {
-          $.msg($.name, `邀请失败: ${resp ? resp.statusCode : '无响应'}`);
+    if(userName == ''){
+      $.msg($.name, `请填写你的邀请码`);
+    } else {
+      const url = `https://sksp.feiwang.cc/sk-api/user/add`;
+      const method = `POST`;
+      userName = getRandomGmail();
+      const headers = {
+        'User-Agent': `Dart/2.10 (dart:io)`,
+        'Host': `sksp.feiwang.cc`,
+        'Content-Type': `application/json; charset=utf-8`,
+        'Accept-Encoding': `gzip`,
+        'Authorization': ``
+      };
+    
+      const body = JSON.stringify({
+        name: userName,
+        password: "zjm12345",
+        confirmPassword: "zjm12345",
+        code: "",
+        yqm: yqm,
+        type: "noyzm",
+        device: getUUID()
+      });
+    
+      const myRequest = {
+        url: url,
+        method: method,
+        headers: headers,
+        body: body
+      };
+    
+      $.post(myRequest, async (err, resp, body) => {
+        try {
+          if (resp && resp.statusCode === 200) {
+            $.msg($.name, `邀请成功，账号: ${userName}`);
+          } else {
+            $.msg($.name, `邀请失败: ${resp ? resp.statusCode : '无响应'}`);
+          }
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve();
         }
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve();
-      }
-    });
+      });
+    }
   });
 }
 
