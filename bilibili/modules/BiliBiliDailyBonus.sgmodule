@@ -16,13 +16,13 @@
 # 更新时间：2025-05-15
 
 [Script]
-B站每日任务 = type=cron,cronexp=30 7 * * *,script-path=https://raw.githubusercontent.com/ClydeTime/BiliBili/main/js/BiliBiliDailyBonus.js,wake-system=1,timeout=15
+B站每日任务 = type=cron,cronexp=30 7 * * *,script-path=https://raw.githubusercontent.com/LiJunYi2/QuantumultX/refs/heads/main/bilibili/js/BiliBiliDailyBonus.js,wake-system=1,timeout=15
 
-{{{bigPoint}}} = type=cron,cronexp=41 7 * * *,script-path=https://raw.githubusercontent.com/ClydeTime/BiliBili/main/js/BiliBiliDailyBonus.js,wake-system=1,timeout=15
+{{{bigPoint}}} = type=cron,cronexp=41 7 * * *,script-path=https://raw.githubusercontent.com/LiJunYi2/QuantumultX/refs/heads/main/bilibili/js/BiliBiliDailyBonus.js,wake-system=1,timeout=15
 
-{{{script_QrCode}}} = type=http-response,pattern=^https?:\/\/app\.bilibili\.com\/x\/resource\/fingerprint\?,script-path=https://raw.githubusercontent.com/ClydeTime/BiliBili/main/js/BiliBiliDailyBonus.js,requires-body=0,timeout=30
+{{{script_QrCode}}} = type=http-response,pattern=^https?:\/\/app\.bilibili\.com\/x\/resource\/fingerprint\?,script-path=https://raw.githubusercontent.com/LiJunYi2/QuantumultX/refs/heads/main/bilibili/js/BiliBiliDailyBonus.js,requires-body=0,timeout=30
 
-{{{script_APP}}} = type=http-request,pattern=^https?:\/\/app\.bilibili\.com\/x\/resource\/fingerprint\?,script-path=https://raw.githubusercontent.com/ClydeTime/BiliBili/main/js/BiliBiliDailyBonus.js,requires-body=0
+{{{script_APP}}} = type=http-request,pattern=^https?:\/\/app\.bilibili\.com\/x\/resource\/fingerprint\?,script-path=https://raw.githubusercontent.com/LiJunYi2/QuantumultX/refs/heads/main/bilibili/js/BiliBiliDailyBonus.js,requires-body=0
 
 [MITM]
 hostname = %APPEND% app.bilibili.com
